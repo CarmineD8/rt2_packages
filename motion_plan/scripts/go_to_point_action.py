@@ -148,17 +148,14 @@ def planning(goal):
             break
         elif state_ == 0:
             feedback.stat = "Fixing the yaw"
-            feedback.position = pose_
             act_s.publish_feedback(feedback)
             fix_yaw(desired_position_)
         elif state_ == 1:
             feedback.stat = "Angle aligned"
-            feedback.position = pose_
             act_s.publish_feedback(feedback)
             go_straight_ahead(desired_position_)
         elif state_ == 2:
             feedback.stat = "Target reached!"
-            feedback.position = pose_
             act_s.publish_feedback(feedback)
             done()
             break

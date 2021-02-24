@@ -10,8 +10,6 @@ int main(int argc, char** argv){
   ros::NodeHandle nh;
 
   actionlib::SimpleActionClient<motion_plan::PlanningAction> ac("/reaching_goal", true);
-  
-  ros::Publisher pub = nh.advertise<std_msgs::Float64>("m2wr/joint1_position_controller/command", 10);
 
   //wait for the action server to come up
   while(!ac.waitForServer(ros::Duration(5.0))){
@@ -25,8 +23,6 @@ int main(int argc, char** argv){
   
   
   for(int i=0;i<4;i++){
-  std_msgs::Float64 angle;
-  angle.data = 0.0;
   //we'll send a goal to move the robot
   goal.target_pose.header.frame_id = "base_link";
   goal.target_pose.header.stamp = ros::Time::now();
@@ -45,16 +41,8 @@ int main(int argc, char** argv){
   else
     ROS_INFO("The base failed to reach the target for some reason");
   
-  ROS_INFO("Rotating camera");
-  while(angle.data<6.27){
-  angle.data = angle.data +0.1;
-  pub.publish(angle);
-  usleep(1000000);
-  
-  }
-  ROS_INFO("Camera rotated");
-    
-}
+  } 
+
 
   return 0;
 }
